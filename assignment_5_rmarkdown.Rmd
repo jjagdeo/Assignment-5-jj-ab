@@ -22,3 +22,37 @@ med_salary_doctoral <- read_csv("median_salary_doctoral_recipients.csv")
 phds <- read_csv("phds_by_field.csv")
 ```
 
+###1). Male and female graduate enrollment (1967 - 2015). Compare trends in total graduate enrollment for males and females (including full-time/part-time and private/public universities) in the United States from 1967 - 2015. Describe your results statistically, graphically and in text.
+
+```{r, echo=FALSE}
+# Run a single regression model on graduate male graduate students from 1967-2015
+
+lm(grad_enrollment$total_males ~ grad_enrollment$year)
+
+# Graph total male enrollment in US grad schools
+
+grad_male_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+theme_bw() +
+scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
+labs(x = "Year", y = "Total Male Enrollment in U.S. Grad Schools")
+
+grad_male_lmgraph
+
+# # Run a single regression model on graduate female graduate students from 1967-2015.
+
+lm(grad_enrollment$total_females ~ grad_enrollment$year) 
+
+# Graph total female enrollment in US grad schools
+
+grad_female_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = total_females)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+theme_bw() +
+scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
+labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
+
+grad_female_lmgraph
+```
+
