@@ -1,0 +1,24 @@
+---
+title: "assignment_5_jj_ab"
+author: "Jessica Jagdeo and Alex Brown"
+date: "November 28, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include = FALSE}
+
+library(tidyverse)
+
+faculty_salary <- read_csv("faculty_salary_data.csv")
+
+grad_enrollment <- read_csv("grad_enrollment.csv")
+
+med_salary_doctoral <- read_csv("median_salary_doctoral_recipients.csv")
+
+phds <- read_csv("phds_by_field.csv")
+```
+
