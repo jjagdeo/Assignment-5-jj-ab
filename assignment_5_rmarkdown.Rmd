@@ -56,3 +56,15 @@ labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
 grad_female_lmgraph
 ```
 
+###3. Compare median salaries for male and female doctorate recipients in 2015. Answer these two questions:Does median salary differ significantly between male and female starting postdoc positions? Does median salary differ significantly between male and female PhD recipients in non-postdoc employment positions?
+
+```{r}
+
+docsal_hist <- ggplot(med_salary_doctoral, aes(x = employment)) +
+  geom_histogram() +
+  facet_wrap(~ gender)
+
+docsal_hist
+
+```
+
