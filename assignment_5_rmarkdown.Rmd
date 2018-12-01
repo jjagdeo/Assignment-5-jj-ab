@@ -15,7 +15,7 @@ library(tidyverse)
 
 faculty_salary <- read_csv("faculty_salary_data.csv")
 
-grad_enrollment <- read_csv("grad_enrollment.csv")
+grad_enrollment <- read_csv("grad_enrollment_2.csv")
 
 med_salary_doctoral <- read_csv("median_salary_doctoral.csv")
 
@@ -27,14 +27,15 @@ phds <- read_csv("phds_by_field.csv")
 ```{r, echo=FALSE}
 # Run a single regression model on graduate male graduate students from 1967-2015
 
-lm(grad_enrollment$total_males ~ grad_enrollment$year)
+male_grad_lm <- lm(grad_enrollment$total_males ~ grad_enrollment$year)
 
+male_grad_lm
 
 # Graph total male enrollment in US grad schools
 
 grad_male_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
 geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
 theme_bw() +
 scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
 labs(x = "Year", y = "Total Male Enrollment in U.S. Grad Schools")
@@ -43,20 +44,36 @@ grad_male_lmgraph
 
 # # Run a single regression model on graduate female graduate students from 1967-2015.
 
-lm(grad_enrollment$total_females ~ grad_enrollment$year) 
+female_grad_lm <- lm(grad_enrollment$total_females ~ grad_enrollment$year) 
 
+female_grad_lm
 
 # Graph total female enrollment in US grad schools
 
 grad_female_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = total_females)) +
 geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "gray20") +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
 theme_bw() +
 scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
 labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
 
 grad_female_lmgraph
 ```
+
+###2.) Shifts in female PhD recipients by field (1985, 2000, and 2015). Describe if and how there was a shift in PhDs awarded to females in four fields (Physical and Earth Sciences, Engineering, Education, and Humanities & Arts) in 1985, 2000, and 2015. Describe your results statistically, in a graph or table, and in text. Note: There are several ways that you can interpret this question. You are invited to decide which you think is/are most interesting. Just be really clear about what you are asking/answering in your report.
+
+```{r}
+female_phd <- phds %>% 
+  select("field_of_study_sex","1985","2000","2015")
+
+phd_female_lm <- lm(field_of_study_sex ~ 1985 + 2000 + 2015, data = female_phd)
+
+
+```
+
+
+
+
 
 ###3. Compare median salaries for male and female doctorate recipients in 2015. Answer these two questions:Does median salary differ significantly between male and female starting postdoc positions? Does median salary differ significantly between male and female PhD recipients in non-postdoc employment positions?
 
