@@ -17,7 +17,7 @@ faculty_salary <- read_csv("faculty_salary_data.csv")
 
 grad_enrollment <- read_csv("grad_enrollment.csv")
 
-med_salary_doctoral <- read_csv("median_salary_doctoral_recipients.csv")
+med_salary_doctoral <- read_csv("median_salary_doctoral.csv")
 
 phds <- read_csv("phds_by_field.csv")
 ```
@@ -28,6 +28,7 @@ phds <- read_csv("phds_by_field.csv")
 # Run a single regression model on graduate male graduate students from 1967-2015
 
 lm(grad_enrollment$total_males ~ grad_enrollment$year)
+
 
 # Graph total male enrollment in US grad schools
 
@@ -43,6 +44,7 @@ grad_male_lmgraph
 # # Run a single regression model on graduate female graduate students from 1967-2015.
 
 lm(grad_enrollment$total_females ~ grad_enrollment$year) 
+
 
 # Graph total female enrollment in US grad schools
 
@@ -60,11 +62,98 @@ grad_female_lmgraph
 
 ```{r}
 
-docsal_hist <- ggplot(med_salary_doctoral, aes(x = employment)) +
-  geom_histogram() +
-  facet_wrap(~ gender)
+# Create histograms to see if median salary data for employed and postdoc positions are normal
 
-docsal_hist
+employmale_hist <- ggplot(med_salary_doctoral, aes(x = employment_male)) +
+  geom_histogram()
+
+employmale_hist
+
+employfemale_hist <- ggplot(med_salary_doctoral, aes(x = employment_female)) +
+  geom_histogram()
+
+employfemale_hist
+
+postdocmale_hist <- ggplot(med_salary_doctoral, aes(x = postdoc_male)) +
+  geom_histogram() 
+
+postdocmale_hist
+
+postdocfemale_hist <- ggplot(med_salary_doctoral, aes(x = postdoc_female)) +
+  geom_histogram() 
+
+postdocfemale_hist
+
+# Data is roughly normally distributed for employment median salary, but not normal for postdoc median salaries. We are going to use a non-parametric test since we want to compare medians, so we need to use a rank-based test. Tht test should be paired so that we are comparing males and females within their own fields. 
+
+```
+
+```{r}
+
+# Run a Wilcoxon signed-rank test (paired) for males and females within their specific fields who are employed
+
+# Null: The ranks are equal
+
+# Alternative: The ranks are NOT equal
+
+wsr_employ <- wilcox.test(med_salary_doctoral$employment_male, med_salary_doctoral$employment_female, paired = TRUE)
+
+wsr_employ
+
+# p value = 0.0026, less than 0.05, indicating that we reject the null hypothesis. The ranks are NOT equal. 
+
+# Median salary differs significantly between male and female PhD recipients in non-postdoc employment positions based on 2005 median salary data.
+```
+
+```{r}
+
+# Run a Wilcoxon signed-rank test (paired) for males and females within their specific fields who are postdocs
+
+# Null: The ranks are equal
+
+# Alternative: The ranks are NOT equal
+
+wsr_postdoc <- wilcox.test(med_salary_doctoral$postdoc_male, med_salary_doctoral$postdoc_female, paired = TRUE)
+
+wsr_postdoc
+
+# p value = 0.888, which is greater than 0.05. Thus, we retain the null hypothesis. The ranks are equal.
+
+# Median salary DOES NOT differ significantly between male and female PhD recipients starting postdoc positions based on 2005 median salary data. 
+
+```
+
+###4. Explore relationships between variables in the ‘Faculty salary data (2008 - 2009 survey)’ dataset. Develop a model describing faculty salary based on data for faculty sex, rank, years in current position, field, and number of years since doctoral degree was earned. You should make decisions regarding which variables should remain in your final model. Describe the results qualitatively and quantitatively (i.e., don’t just report the statistical results of the model – make sure you describe interesting findings in text). You can also discuss any concerns that you have with the model(s) you present, if any.
+
+```{r}
+
+# First, look at the data graphically to determine if a linear relationship exists between faculty salary
+
+salary_scatter <- ggplot(faculty_salary, aes(x = years_since_phd, y = salary)) +
+  geom_point(aes(color = rank)) +
+  facet_wrap(~ sex)
+
+salary_scatter
+
+# There seems to be a linear relationship between faculty salary and sex, ranks, and number of years since doctoral degree was earned
+
+```
+
+```{r}
+
+# Create a mutivariate linear regression model for faculty salary
+
+faculty_salary_lm <- lm(salary ~ sex + rank + years_since_phd + years_faculty_service, data = faculty_salary)
+
+summary(faculty_salary_lm)
+
+```
+
+```{r}
+
+# Check out model diagnostics
+
+plot(faculty_salary_lm)
 
 ```
 
