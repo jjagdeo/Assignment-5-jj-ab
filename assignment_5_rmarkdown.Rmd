@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(stargazer)
+library(effsize)
 
 faculty_salary <- read_csv("faculty_salary_data.csv")
 
@@ -125,6 +126,18 @@ wsr_employ
 
 ```{r}
 
+# Calculate Cliff's Delta for Wilcoxon sign-rank test for  males and females within their specific fields who are employed
+
+employ_cliffs <- cliff.delta(med_salary_doctoral$employment_male, med_salary_doctoral$employment_female)
+
+employ_cliffs
+
+# Small to medium effect size (Cliff's Delta = 0.21), meaning there is some overlap between groups
+
+```
+
+```{r}
+
 # Run a Wilcoxon signed-rank test (paired) for males and females within their specific fields who are postdocs
 
 # Null: The ranks are equal
@@ -138,6 +151,18 @@ wsr_postdoc
 # p value = 0.888, which is greater than 0.05. Thus, we retain the null hypothesis. The ranks are equal.
 
 # Median salary DOES NOT differ significantly between male and female PhD recipients starting postdoc positions based on 2005 median salary data. 
+
+```
+
+```{r}
+
+# Calculate Cliff's Delta for Wilcoxon signed-rank test (paired) for males and females within their specific fields who are postdocs
+
+postdoc_cliffs <- cliff.delta(med_salary_doctoral$postdoc_male, med_salary_doctoral$postdoc_female)
+
+postdoc_cliffs
+
+# Negligible effect size
 
 ```
 
@@ -167,7 +192,7 @@ summary(faculty_salary_lm)
 
 # Reference levels are females, associate professors, and discipline A. 
 
-# salary = 4783.5(sexmale) - 12907.6(rankAsstProf) + 32158.4(rankProf) + 535.1(years_since_phds) - 489.5(years_faculty_service) + 14417.6(disciplineB)
+# salary = 78862.8 + 4783.5(sexmale) - 12907.6(rankAsstProf) + 32158.4(rankProf) + 535.1(years_since_phds) - 489.5(years_faculty_service) + 14417.6(disciplineB)
 
 # If all other variables are the same, then male graduates with PhDs make $4,783.5 more than female graduates with PhDs.
 
@@ -196,4 +221,5 @@ plot(faculty_salary_lm)
 stargazer(faculty_salary_lm, type = "html")
 
 ```
+
 
