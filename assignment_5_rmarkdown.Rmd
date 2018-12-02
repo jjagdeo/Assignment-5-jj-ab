@@ -62,6 +62,83 @@ labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
 grad_female_lmgraph
 ```
 
+Compare Female and Male full-time enrollemnt trends
+
+```{r}
+# Run a single regression model on full time graduate male graduate students from 1967-2015
+
+male_fulltimegrad_lm <- lm(grad_enrollment$males_full_time ~ grad_enrollment$year)
+
+male_fulltimegrad_lm
+
+# Graph full time male enrollment in US grad schools
+
+grad_fulltimemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = males_full_time)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
+theme_bw() +
+scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
+labs(x = "Year", y = "Full Time Male Enrollment in U.S. Grad Schools")
+
+grad_fulltimemale_lmgraph
+
+# Run a single regression model on graduate full time female graduate students from 1967-2015.
+
+female_fulltimegrad_lm <- lm(grad_enrollment$females_full_time ~ grad_enrollment$year)
+
+female_fulltimegrad_lm
+
+# Graph full time female enrollment in US grad schools
+
+grad_fulltimefemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = females_full_time)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
+theme_bw() +
+scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
+labs(x = "Year", y = "Full Time Female Enrollment in U.S. Grad Schools")
+
+grad_fulltimefemale_lmgraph
+
+```
+
+Compare female and male part time enrollment trends.
+
+```{r}
+# Run a single regression model on part time graduate male graduate students from 1967-2015
+
+male_parttimegrad_lm <- lm(grad_enrollment$males_part_time ~ grad_enrollment$year)
+
+male_parttimegrad_lm
+
+# Graph part time male enrollment in US grad schools
+
+grad_parttimemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = males_part_time)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
+theme_bw() +
+scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
+labs(x = "Year", y = "Part Time Male Enrollment in U.S. Grad Schools")
+
+grad_fulltimemale_lmgraph
+
+# Run a single regression model on graduate part time female graduate students from 1967-2015.
+
+female_parttimegrad_lm <- lm(grad_enrollment$females_part_time ~ grad_enrollment$year)
+
+female_parttimegrad_lm
+
+# Graph part time female enrollment in US grad schools
+
+grad_parttimefemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = females_part_time)) +
+geom_point() +
+geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
+theme_bw() +
+scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
+labs(x = "Year", y = "Part Time Female Enrollment in U.S. Grad Schools")
+
+grad_parttimefemale_lmgraph
+```
+
 ###2.) Shifts in female PhD recipients by field (1985, 2000, and 2015). Describe if and how there was a shift in PhDs awarded to females in four fields (Physical and Earth Sciences, Engineering, Education, and Humanities & Arts) in 1985, 2000, and 2015. Describe your results statistically, in a graph or table, and in text. Note: There are several ways that you can interpret this question. You are invited to decide which you think is/are most interesting. Just be really clear about what you are asking/answering in your report.
 
 ```{r}
@@ -69,7 +146,20 @@ grad_female_lmgraph
 female_phd <- phds %>% 
   select("field_of_study_sex","1985","2000","2015")
 
-phd_female_lm <- lm(field_of_study_sex ~ 1985 + 2000 + 2015, data = female_phd)
+# Set Year to class 'factor'
+
+female_phd$1985 <- factor(female_phd$1985)
+
+# Check to ensure it's a factor now
+# Use class() to check
+
+# convert counts to proportions 
+
+female_phd_prop <- prop.table(as.matrix(female_phd), 1)
+
+# We ask: "Is there a significant association between year (1985, 2000, and 2015) and female PhD recipients by field?"
+
+female_phd_x2 <- chisq.test(female_phd)
 
 ```
 
