@@ -173,7 +173,7 @@ summary(faculty_salary_lm)
 
 # If all other variables are the same, then professors make $32,158.4 more than associate professors. 
 
-# Adjusted R2 value is 0.45
+# Adjusted R2 value is 0.45. 45% of the variance in faculty salaries can be predicted by the independent variable.
 
 ```
 
