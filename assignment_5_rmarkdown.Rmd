@@ -60,6 +60,13 @@ scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
 labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
 
 grad_female_lmgraph
+
+enroll_graph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
+  geom_smooth(se = F, aes(col = "Male")) +
+  geom_smooth(aes(x = year, y = total_females, col = "Female"), se = F) +
+  labs(x = "Year", y = "Total Enrollment in U.S. Grad Schools")
+
+enroll_graph
 ```
 
 Compare Female and Male full-time enrollemnt trends
@@ -99,6 +106,13 @@ labs(x = "Year", y = "Full Time Female Enrollment in U.S. Grad Schools")
 
 grad_fulltimefemale_lmgraph
 
+fulltimeenroll_graph <- ggplot(grad_enrollment, aes(x = year, y = males_full_time)) +
+  geom_smooth(se = F, aes(col = "Male")) +
+  geom_smooth(aes(x = year, y = females_full_time, col = "Female"), se = F) +
+  labs(x = "Year", y = "Full Time Enrollment in U.S. Grad Schools")
+
+fulltimeenroll_graph
+
 ```
 
 Compare female and male part time enrollment trends.
@@ -137,6 +151,13 @@ scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
 labs(x = "Year", y = "Part Time Female Enrollment in U.S. Grad Schools")
 
 grad_parttimefemale_lmgraph
+
+parttimeenroll_graph <- ggplot(grad_enrollment, aes(x = year, y = females_part_time)) +
+  geom_smooth(se = F, aes(col = "Female")) +
+  geom_smooth(aes(x = year, y = males_part_time, col = "Male"), se = F) +
+  labs(x = "Year", y = "Part Time Enrollment in U.S. Grad Schools")
+
+parttimeenroll_graph
 ```
 
 ###2.) Shifts in female PhD recipients by field (1985, 2000, and 2015). Describe if and how there was a shift in PhDs awarded to females in four fields (Physical and Earth Sciences, Engineering, Education, and Humanities & Arts) in 1985, 2000, and 2015. Describe your results statistically, in a graph or table, and in text. Note: There are several ways that you can interpret this question. You are invited to decide which you think is/are most interesting. Just be really clear about what you are asking/answering in your report.
