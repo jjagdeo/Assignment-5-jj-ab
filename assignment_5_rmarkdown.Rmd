@@ -21,7 +21,7 @@ grad_enrollment <- read_csv("grad_enrollment_2.csv")
 
 med_salary_doctoral <- read_csv("median_salary_doctoral.csv")
 
-phds <- read_csv("phds_by_field.csv")
+phds <- read_csv("phds_updated_2.csv")
 ```
 
 ###1). Male and female graduate enrollment (1967 - 2015). Compare trends in total graduate enrollment for males and females (including full-time/part-time and private/public universities) in the United States from 1967 - 2015. Describe your results statistically, graphically and in text.
@@ -60,6 +60,8 @@ scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
 labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
 
 grad_female_lmgraph
+
+# # Graph male and female enrollment together 
 
 enroll_graph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
   geom_smooth(se = F, aes(col = "Male")) +
@@ -105,6 +107,8 @@ scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
 labs(x = "Year", y = "Full Time Female Enrollment in U.S. Grad Schools")
 
 grad_fulltimefemale_lmgraph
+
+# Graph full time male and female enrollment together 
 
 fulltimeenroll_graph <- ggplot(grad_enrollment, aes(x = year, y = males_full_time)) +
   geom_smooth(se = F, aes(col = "Male")) +
@@ -152,6 +156,8 @@ labs(x = "Year", y = "Part Time Female Enrollment in U.S. Grad Schools")
 
 grad_parttimefemale_lmgraph
 
+# Graph part time male and female enrollment together 
+
 parttimeenroll_graph <- ggplot(grad_enrollment, aes(x = year, y = females_part_time)) +
   geom_smooth(se = F, aes(col = "Female")) +
   geom_smooth(aes(x = year, y = males_part_time, col = "Male"), se = F) +
@@ -163,24 +169,28 @@ parttimeenroll_graph
 ###2.) Shifts in female PhD recipients by field (1985, 2000, and 2015). Describe if and how there was a shift in PhDs awarded to females in four fields (Physical and Earth Sciences, Engineering, Education, and Humanities & Arts) in 1985, 2000, and 2015. Describe your results statistically, in a graph or table, and in text. Note: There are several ways that you can interpret this question. You are invited to decide which you think is/are most interesting. Just be really clear about what you are asking/answering in your report.
 
 ```{r}
+# create a df of female phds in the 4 fields in 1985, 2000, 2015
 
-female_phd <- phds %>% 
-  select("field_of_study_sex","1985","2000","2015")
+phd_shifts <- phds %>%
+  select(physical_sciences_and_earth_sciences_female, engineering_female, education_female, humanities_and_arts_female)
+  
+phd_shifts
 
-# Set Year to class 'factor'
+# create a proportion table
 
-female_phd$1985 <- factor(female_phd$1985)
+phds_prop <- prop.table(as.matrix(phd_shifts), 1)
 
-# Check to ensure it's a factor now
-# Use class() to check
+phds_prop
 
-# convert counts to proportions 
-
-female_phd_prop <- prop.table(as.matrix(female_phd), 1)
+# run a chi sq test
 
 # We ask: "Is there a significant association between year (1985, 2000, and 2015) and female PhD recipients by field?"
 
-female_phd_x2 <- chisq.test(female_phd)
+female_phd_year_x2 <- chisq.test(phd_shifts)
+
+female_phd_year_x2 
+
+# graphically represent increase in female phds by field in 1985, 2000, and 2015
 
 ```
 
