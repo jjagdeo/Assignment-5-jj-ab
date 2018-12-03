@@ -327,7 +327,7 @@ plot(faculty_salary_lm)
 
 ```{r, results = 'asis'}
 
-# Prepare a residuals table
+# Prepare a regression table
 
 stargazer(faculty_salary_lm, type = "html")
 
