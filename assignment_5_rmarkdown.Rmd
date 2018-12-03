@@ -302,6 +302,7 @@ salary_scatter
 # There seems to be a linear relationship between faculty salary and sex, ranks, and number of years since doctoral degree was earned
 
 ```
+### Note to Jess: Discuss taking out years_faculty_service variable with Alex, because it tells a similar story as years_since_phds
 
 ```{r}
 
