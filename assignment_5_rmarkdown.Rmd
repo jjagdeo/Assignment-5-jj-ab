@@ -69,11 +69,16 @@ female_grad_pearson
 # # Graph male and female enrollment together 
 
 enroll_graph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
-  geom_line() +
-  geom_smooth(method = lm, se = F, aes(col = "Male")) +
-  geom_smooth(aes(x = year, y = total_females, col = "Female"), method = lm, se = F) +
-  geom_line(aes(x = year, y = total_females)) +
-  labs(x = "Year", y = "Total Enrollment")
+  geom_line(aes(color = "total_males")) +
+  geom_smooth(method = lm, se = F, aes(col = "Male Linear\n Regression\n")) +
+  geom_smooth(aes(x = year, y = total_females, col = "Female Linear\n Regression\n"), method = lm, se = F) +
+  geom_line(aes(x = year, y = total_females, color = "total_females")) +
+  labs(x = "Year", y = "Total Enrollment") + 
+  labs(color='Sex') +
+  theme_classic() +
+  scale_color_hue(labels = c("Female Linear\n Regression\n", "Male Linear\n Regression\n", "Total Females", "Total Males")) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_continuous(expand = c(0,0))
 
 enroll_graph
 ```
@@ -262,7 +267,11 @@ wsr_employ
 # p value = 0.0026, less than 0.05, indicating that we reject the null hypothesis. The ranks are NOT equal. 
 
 # Median salary differs significantly between male and female PhD recipients in non-postdoc employment positions based on 2005 median salary data.
+
+# "Non-parametric Wilcoxon Signed-Rank for data collected from 10 locations around Santa Barbara county revealed that the median particulate matter concentration (µg/m3) did not increase significantly following the fire (V = 13.5, p = 0.08). While PM concentrations at 7 of the 10 sites were somewhat similar or even slightly decreased following the fire, there was a drastic spike in PM at the Santa Ynez station (from 19 to 284 µg/m3). Further analysis (e.g. of wind direction) is needed to understand the disproportionate increase at the Santa Ynez site.”
+
 ```
+
 
 ```{r}
 
@@ -275,6 +284,7 @@ employ_cliffs
 # Small to medium effect size (Cliff's Delta = 0.21), meaning there is some overlap between groups
 
 ```
+Employed in-line referencing: V = `r wsr_employ$statistic`, *p*  < 0.01, $\alpha$ = 0.05. Cliff's Delta = `r round(employ_cliffs$estimate,2)`.
 
 ```{r}
 
@@ -321,19 +331,19 @@ salary_scatter
 # There seems to be a linear relationship between faculty salary and sex, ranks, and number of years since doctoral degree was earned
 
 ```
-### Note to Jess: Discuss taking out years_faculty_service variable with Alex, because it tells a similar story as years_since_phds
+
 
 ```{r}
 
 # Create a mutivariate linear regression model for faculty salary
 
-faculty_salary_lm <- lm(salary ~ sex + rank + years_since_phd + years_faculty_service + discipline, data = faculty_salary)
+faculty_salary_lm <- lm(salary ~ sex + rank + years_since_phd + discipline, data = faculty_salary)
 
 summary(faculty_salary_lm)
 
 # Reference levels are females, associate professors, and discipline A. 
 
-# salary = 78862.8 + 4783.5(sexmale) - 12907.6(rankAsstProf) + 32158.4(rankProf) + 535.1(years_since_phds) - 489.5(years_faculty_service) + 14417.6(disciplineB)
+# salary = 78862.8 + 4783.5(sexmale) - 12907.6(rankAsstProf) + 32158.4(rankProf) + 535.1(years_since_phds) + 14417.6(disciplineB)
 
 # If all other variables are the same, then male graduates with PhDs make $4,783.5 more than female graduates with PhDs.
 
@@ -354,13 +364,23 @@ plot(faculty_salary_lm)
 # Residuals vs. fitted shows scatter, but slight concentration around 0
 
 ```
+### Note for Jess: Edit regression table caption 
 
 ```{r, results = 'asis'}
 
 # Prepare a regression table
 
-stargazer(faculty_salary_lm, type = "html")
+stargazer(faculty_salary_lm, 
+          type = "html",
+          align = TRUE,
+          title = "*Table 2. Multivariate Linear Regression for Faculty Salaries in the US.* Results of the multivariate linear regression to examine faculty salaries in the US in comparison to sex, faculty rank, department type, and years since obtaining a PhD.",
+          covariate.labels = c("Male (Sex)", "Assistant Professor (Rank)", "Professor (Rank)", "Years Since PhD", "Applied Department"),
+          dep.var.labels=c("Salary"),
+          single.row = TRUE
+          )
+
+# “Setosa sepal length significantly predicts sepal width (b = 0.79, t(48) = 7.6, p < 0.001) with a strong positive correlation between the two (Pearson’s r = 0.74). The overall model (width = 0.79(length) − 0.57; both in centimeters) explains a significant amount of variance in sepal width (F(1,48) = 59, p < 0.001, R2 = 0.55).”
 
 ```
 
-Wow we really messed up 
+
