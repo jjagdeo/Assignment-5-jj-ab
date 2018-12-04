@@ -14,6 +14,18 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(stargazer)
 library(effsize)
+library(knitr)
+library(kableExtra)
+library(plotly)
+library(pwr)
+library(car)
+library(RColorBrewer)
+library(extrafont)
+library(ggrepel)
+library(effsize)
+library(ggpubr)
+library(vcdExtra)
+library(dplyr)
 
 faculty_salary <- read_csv("faculty_salary_data.csv")
 
@@ -22,58 +34,53 @@ grad_enrollment <- read_csv("grad_enrollment_2.csv")
 med_salary_doctoral <- read_csv("median_salary_doctoral.csv")
 
 phds <- read_csv("phds_updated_2.csv")
+
+phds_tbl2 <- read_csv("phds_updated_4.csv")
 ```
 
 ###1). Male and female graduate enrollment (1967 - 2015). Compare trends in total graduate enrollment for males and females (including full-time/part-time and private/public universities) in the United States from 1967 - 2015. Describe your results statistically, graphically and in text.
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 # Run a single regression model on graduate male graduate students from 1967-2015
 
 male_grad_lm <- lm(grad_enrollment$total_males ~ grad_enrollment$year)
 
 male_grad_lm
 
-# Graph total male enrollment in US grad schools
+# Run Pearson's r
 
-grad_male_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
-geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
-theme_bw() +
-scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
-labs(x = "Year", y = "Total Male Enrollment in U.S. Grad Schools")
+male_grad_pearson <- cor.test(grad_enrollment$year, grad_enrollment$total_males)
 
-grad_male_lmgraph
-
-# # Run a single regression model on graduate female graduate students from 1967-2015.
+male_grad_pearson
+# Run a single regression model on graduate female graduate students from 1967-2015.
 
 female_grad_lm <- lm(grad_enrollment$total_females ~ grad_enrollment$year) 
 
 female_grad_lm
 
-# Graph total female enrollment in US grad schools
+female_grad_pearson <- cor.test(grad_enrollment$year, grad_enrollment$total_females)
 
-grad_female_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = total_females)) +
-geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
-theme_bw() +
-scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
-labs(x = "Year", y = "Total Female Enrollment in U.S. Grad Schools")
+female_grad_pearson
 
-grad_female_lmgraph
 
+```
+
+```{r, echo=FALSE}
 # # Graph male and female enrollment together 
 
 enroll_graph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
-  geom_smooth(se = F, aes(col = "Male")) +
-  geom_smooth(aes(x = year, y = total_females, col = "Female"), se = F) +
-  labs(x = "Year", y = "Total Enrollment in U.S. Grad Schools")
+  geom_line() +
+  geom_smooth(method = lm, se = F, aes(col = "Male")) +
+  geom_smooth(aes(x = year, y = total_females, col = "Female"), method = lm, se = F) +
+  geom_line(aes(x = year, y = total_females)) +
+  labs(x = "Year", y = "Total Enrollment")
 
 enroll_graph
 ```
 
-Compare Female and Male full-time enrollemnt trends
+**Figure 1. Relationship between total female graduate enrolled students and year (1967-2015) and total male graduate enrolled students and year (1967-2015).** Year significantly predicts total female graduate enrollment (t(47) = 51.659, p < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99). Year also significantly predicts total male graduate enrollment (t(47) = 16.612, p < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92).
 
-```{r}
+```{r, include=FALSE}
 # Run a single regression model on full time graduate male graduate students from 1967-2015
 
 male_fulltimegrad_lm <- lm(grad_enrollment$males_full_time ~ grad_enrollment$year)
@@ -119,9 +126,9 @@ fulltimeenroll_graph
 
 ```
 
-Compare female and male part time enrollment trends.
 
-```{r}
+
+```{r, include=FALSE}
 # Run a single regression model on part time graduate male graduate students from 1967-2015
 
 male_parttimegrad_lm <- lm(grad_enrollment$males_part_time ~ grad_enrollment$year)
@@ -168,7 +175,7 @@ parttimeenroll_graph
 
 ###2.) Shifts in female PhD recipients by field (1985, 2000, and 2015). Describe if and how there was a shift in PhDs awarded to females in four fields (Physical and Earth Sciences, Engineering, Education, and Humanities & Arts) in 1985, 2000, and 2015. Describe your results statistically, in a graph or table, and in text. Note: There are several ways that you can interpret this question. You are invited to decide which you think is/are most interesting. Just be really clear about what you are asking/answering in your report.
 
-```{r}
+```{r, include=FALSE}
 # create a df of female phds in the 4 fields in 1985, 2000, 2015
 
 phd_shifts <- phds %>%
@@ -194,6 +201,18 @@ female_phd_year_x2
 
 ```
 
+```{r, echo=FALSE}
+# graphically represent increase in female phds by field in 1985, 2000, and 2015
+
+phds_tbl3 <- phds_tbl2 %>% 
+  select(field_of_study, "1985", "2000", "2015")
+
+phds_femalecounts_year_tbl <- phds_tbl3 %>% 
+  kable(col.names = c("Field of Study","1985", "2000", "2015"),caption = "Table 2. Number of Women PhDs in Four Fields in 1985, 2000, and 2015") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+
+phds_femalecounts_year_tbl
+```
 
 
 
