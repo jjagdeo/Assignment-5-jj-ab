@@ -344,4 +344,4 @@ stargazer(faculty_salary_lm, type = "html")
 
 ```
 
-
+Wow we really messed up 
