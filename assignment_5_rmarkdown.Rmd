@@ -1,7 +1,7 @@
 ---
 title: "assignment_5_jj_ab"
 author: "Jessica Jagdeo and Alex Brown"
-date: "November 28, 2018"
+date: "December 5, 2018"
 output: html_document
 ---
 
@@ -37,8 +37,25 @@ phds <- read_csv("phds_updated_2.csv")
 
 phds_tbl2 <- read_csv("phds_updated_4.csv")
 ```
+###Introduction
 
-###1). Male and female graduate enrollment (1967 - 2015). Compare trends in total graduate enrollment for males and females (including full-time/part-time and private/public universities) in the United States from 1967 - 2015. Describe your results statistically, graphically and in text.
+The male-to-female ratio of students in college changed throughout the 20th century. Up until the 1930s, male and female undergraduate enrollment was about equal across colleges in the United States. After the 1930s, male enrollment began to increase at a faster rate than female enrollment because American soldiers were returning from overseas. During the period from the 1930s to the 1970s, colleges witnessed an increase in the male-to-female ratio of undergraduate students. However, this trajectory altered in the 1980s, with greater rates of female enrollment, and by 2003, there were 1.30 females for every male undergraduate. This pattern of increasing female enrollment can also be seen among graduate school enrollments, as female, as the academic year of 2016-2017 marked the eighth consecutive year in which females earned more doctoral degrees than males.
+
+Although college enrollments are greater for American females than for males, college-educated women are still not paid equally compared to college-educated men with similar skills and backgrounds. In addition, further categorizations using racial groups better depict wage gaps among college-educated males and females. A study conducted in 1998 discovered that there is a ten to fifteen percent wage difference between white women, black men, black women, Asian men, and Asian women in comparison to white men who have the same characteristics and qualities of college education. Furthermore, this inequality in wages occurs among males and females with graduate degrees. A 2015 study determined that female science and engineering doctoral recipients report having lower salaries than their male colleagues. 
+
+Many studies have been conducted to analyze undergraduate enrollment and wage gaps for college-educated people based on gender. However, studies that specifically examine male and female graduate students in these areas are more elusive. Thus, this study seeks to add to the existing literature regarding graduate students by investigating male and female graduate school enrollment from 1967 to 2015. Furthermore, this paper aims to identify shifts in female PhD recipients by field at three different periods in history. Lastly, this study will analyze patterns between salary and gender by examining median salaries for male and female doctoral recipients in 2015 and academic salaries for professors in American colleges. 
+
+###Data and Methods
+
+The graduate enrollment data used in this study was provided by the US Department of Education’s National Center for Education Statistics Higher Education General Information Survey. Information on doctoral recipients and their median salaries were obtained from the National Science Foundation’s National Center for Science and Engineering Statistics Survey of Earned Doctorates. In addition, Fox J. and Weisberg, S. (2011) An R Companion to Applied Regression, Second Edition Sage provided data on professor characteristics and associated salaries, gathered from surveys.
+
+The data used in this study was analyzed in R. Two separate linear regressions were created to examine changes in female and male graduate enrollment between 1967 and 2015. To analyze changes in female PhD recipients by field in 1985, 2000, and 2015, a chi-square test was conducted. A paired Wilcoxon sign-rank test was used to compare the median salaries of male and female doctorate recipients within the same field who are currently employed as postdoctoral researchers. In addition, another paired Wilcoxon sign-rank test compared the median salaries of male and female doctorate recipients within the same field, but examined only those employed outside of postdoctoral research. Lastly, a multivariate linear regression model was created to analyze university faculty salaries in the U.S. based on gender, faculty rank, field,  the number of years since obtaining a PhD, and the number of years as a faculty member. 
+
+###Results and Discussion
+
+####A Comparison of Male and Female Graduate Enrollment From 1967 to 2015
+
+The total number of both male and female graduate students enrolled in U.S. institutions of higher education grew rapidly between 1967 and 2015, according to data from the US Department of Education. However, the rate at which female graduate student enrollment increased compared to their male counterparts was far greater during this period. In 1967 there were approximately 38 thousand more male graduate students enrolled in U.S. colleges than female enrolled graduate students, but by 1988 female graduate students outnumbered their male counterparts. In 2015, the last year of recorded data, graduate enrolled females outnumbered males by nearly 50 thousand in U.S. colleges and universities.
 
 ```{r, include=FALSE}
 # Run a single regression model on graduate male graduate students from 1967-2015
@@ -83,102 +100,13 @@ enroll_graph <- ggplot(grad_enrollment, aes(x = year, y = total_males)) +
 enroll_graph
 ```
 
-**Figure 1. Relationship between total female graduate enrolled students and year (1967-2015) and total male graduate enrolled students and year (1967-2015).** Year significantly predicts total female graduate enrollment (t(47) = 51.659, p < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99). Year also significantly predicts total male graduate enrollment (t(47) = 16.612, p < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92).
+**Figure 1. Relationship between total female graduate enrolled students and year (1967-2015) and total male graduate enrolled students and year (1967-2015).** Year significantly predicts total female graduate enrollment (t(47) = 51.659, *p* < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99). Year also significantly predicts total male graduate enrollment (t(47) = 16.612, p < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92).
 
-```{r, include=FALSE}
-# Run a single regression model on full time graduate male graduate students from 1967-2015
+To determine whether there was an association between year and and number of enrolled male graduate students, a single variable linear regression model was run with ‘year’ being the independent variable and ‘total enrolled male graduate students’ being the dependent variable. The year significantly predicts total male graduate enrollment (t(47) = 16.612, *p* < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92). (Figure 1). To determine whether there was an association between year and and number of enrolled female graduate students, another single variable linear regression model was run with ‘year’ being the independent variable and ‘total enrolled female graduate students’ being the dependent variable. In this case, year also significantly predicts total female graduate enrollment (t(47) = 51.659, *p* < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99). (Figure 1). 
 
-male_fulltimegrad_lm <- lm(grad_enrollment$males_full_time ~ grad_enrollment$year)
+While there is an association between both the number of male and female graduate enrolled students and the year, it is important to note some key differences between the two. The proportion of female graduate students enrolled part time is far higher in comparison to the proportion of female graduate students enrolled full time. Part time female graduate students surpassed part time male graduate students in the mid 1970s, whereas full time female graduate students surpassed the number of full time male graduate students in the late 1990s.
 
-male_fulltimegrad_lm
-
-# Graph full time male enrollment in US grad schools
-
-grad_fulltimemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = males_full_time)) +
-geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
-theme_bw() +
-scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
-labs(x = "Year", y = "Full Time Male Enrollment in U.S. Grad Schools")
-
-grad_fulltimemale_lmgraph
-
-# Run a single regression model on graduate full time female graduate students from 1967-2015.
-
-female_fulltimegrad_lm <- lm(grad_enrollment$females_full_time ~ grad_enrollment$year)
-
-female_fulltimegrad_lm
-
-# Graph full time female enrollment in US grad schools
-
-grad_fulltimefemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = females_full_time)) +
-geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
-theme_bw() +
-scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
-labs(x = "Year", y = "Full Time Female Enrollment in U.S. Grad Schools")
-
-grad_fulltimefemale_lmgraph
-
-# Graph full time male and female enrollment together 
-
-fulltimeenroll_graph <- ggplot(grad_enrollment, aes(x = year, y = males_full_time)) +
-  geom_smooth(se = F, aes(col = "Male")) +
-  geom_smooth(aes(x = year, y = females_full_time, col = "Female"), se = F) +
-  labs(x = "Year", y = "Full Time Enrollment in U.S. Grad Schools")
-
-fulltimeenroll_graph
-
-```
-
-
-
-```{r, include=FALSE}
-# Run a single regression model on part time graduate male graduate students from 1967-2015
-
-male_parttimegrad_lm <- lm(grad_enrollment$males_part_time ~ grad_enrollment$year)
-
-male_parttimegrad_lm
-
-# Graph part time male enrollment in US grad schools
-
-grad_parttimemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = males_part_time)) +
-geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
-theme_bw() +
-scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
-labs(x = "Year", y = "Part Time Male Enrollment in U.S. Grad Schools")
-
-grad_fulltimemale_lmgraph
-
-# Run a single regression model on graduate part time female graduate students from 1967-2015.
-
-female_parttimegrad_lm <- lm(grad_enrollment$females_part_time ~ grad_enrollment$year)
-
-female_parttimegrad_lm
-
-# Graph part time female enrollment in US grad schools
-
-grad_parttimefemale_lmgraph <- ggplot(grad_enrollment, aes(x = year, y = females_part_time)) +
-geom_point() +
-geom_smooth(method = lm, se = TRUE, size = 0.5, color = "dodgerblue") +
-theme_bw() +
-scale_x_continuous(expand = c(0,0), limits = c(1967, 2015)) +
-labs(x = "Year", y = "Part Time Female Enrollment in U.S. Grad Schools")
-
-grad_parttimefemale_lmgraph
-
-# Graph part time male and female enrollment together 
-
-parttimeenroll_graph <- ggplot(grad_enrollment, aes(x = year, y = females_part_time)) +
-  geom_smooth(se = F, aes(col = "Female")) +
-  geom_smooth(aes(x = year, y = males_part_time, col = "Male"), se = F) +
-  labs(x = "Year", y = "Part Time Enrollment in U.S. Grad Schools")
-
-parttimeenroll_graph
-```
-
-###2.) Shifts in female PhD recipients by field (1985, 2000, and 2015). Describe if and how there was a shift in PhDs awarded to females in four fields (Physical and Earth Sciences, Engineering, Education, and Humanities & Arts) in 1985, 2000, and 2015. Describe your results statistically, in a graph or table, and in text. Note: There are several ways that you can interpret this question. You are invited to decide which you think is/are most interesting. Just be really clear about what you are asking/answering in your report.
+The slower growth of full time female graduate students in comparison to part time female enrolled graduate students can potentially be explained due to differences in gender roles in the 1970s and 1980s. During this time it was still common place for women to be the primary caregiver for their family, while men were the primary source of income. Beginning in the 1990s, the number of full time female graduate students increased rapidly, perhaps as a result of the changing societal views on gender roles. 
 
 ```{r, include=FALSE}
 # create a df of female phds in the 4 fields in 1985, 2000, 2015
@@ -205,7 +133,9 @@ female_phd_year_x2
 # graphically represent increase in female phds by field in 1985, 2000, and 2015
 
 ```
+####Changes in Female PhD recipients in Four Fields in 1985, 2000, and 2015
 
+The number of female PhD recipients in physical and earth sciences, engineering, education, and humanities and the arts increased from 1985 to 2015. The amount of increase in female PhD recipients was substantial in physical and earth sciences, engineering, and humanities and the arts, however the increase in education was rather nominal.
 ```{r, echo=FALSE}
 # graphically represent increase in female phds by field in 1985, 2000, and 2015
 
@@ -218,6 +148,11 @@ phds_femalecounts_year_tbl <- phds_tbl3 %>%
 
 phds_femalecounts_year_tbl
 ```
+In order to determine if a significant association exists between female PhD recipients by field and year, we complied the raw counts of female PhD recipients by field and the year in which they were recorded (1985, 2000, 2015). (See Table 2). After the raw counts were compiled we converted the raw counts into proportions in order to run a Pearson’s chi-square test for association between year and the number of female PhD recipients by field. After running the test an association between year and female PhD recipients by field was found, $\chi^2$(6) = 2073.3, *p* < 0.001.
+
+The most interesting aspect in this data is the amount of increase in female PhD recipients in STEM fields (physical/earth sciences, engineering). The amount of female PhD recipients in physical and earth sciences increased nearly 350 % between 1985 and 2015, whereas the amount of female PhD recipients in engineering increased by over 1000%. The amount of female PhD recipients in humanities and arts doubled, however the amount of female PhD recipients in education barely increased from 1985 to 2015 by just 11 more recipients. In fact, the amount of female PhD recipients in education decreased from its peak in 2000 of 4,179 to 3,502 in 2015. (Table 2).
+
+The large increases in female PhD recipients in STEM fields can also potentially be explained in shifting societal notions of what is considered “so-called” male or female professions. In the 1980s it was still a popular notion in American society that “female professions” did not usually include professions such as a scientist or an engineer. However, as these notions have shifted significantly over the past several decades the number of female PhD recipients in STEM have increased dramatically. 
 
 
 
