@@ -245,16 +245,6 @@ Humanities/Arts
 </div>
 <div id="an-analysis-of-faculty-salaries-in-united-states-higher-education" class="section level4">
 <h4>An Analysis of Faculty Salaries in United States Higher Education</h4>
-<pre class="r"><code># Prepare a regression table
-
-stargazer(faculty_salary_lm, 
-          type = &quot;html&quot;,
-          align = TRUE,
-          title = &quot;*Table 2. Multivariate Linear Regression for Faculty Salaries in the US.* Results of the multivariate linear regression to examine faculty salaries in the US in comparison to sex, faculty rank, department type, and years since obtaining a PhD.&quot;,
-          covariate.labels = c(&quot;Male (Sex)&quot;, &quot;Assistant Professor (Rank)&quot;, &quot;Professor (Rank)&quot;, &quot;Years Since PhD&quot;, &quot;Applied Department&quot;),
-          dep.var.labels=c(&quot;Salary&quot;),
-          single.row = TRUE
-          )</code></pre>
 <table style="text-align:center">
 <caption>
 <strong><em>Table 2. Multivariate Linear Regression for Faculty Salaries in the US.</em> Results of the multivariate linear regression to examine faculty salaries in the US in comparison to sex, faculty rank, department type, and years since obtaining a PhD.</strong>
