@@ -39,23 +39,26 @@ phds_tbl2 <- read_csv("phds_updated_4.csv")
 ```
 ###Introduction
 
-The male-to-female ratio of students in college changed throughout the 20th century. Up until the 1930s, male and female undergraduate enrollment was about equal across colleges in the United States. After the 1930s, male enrollment began to increase at a faster rate than female enrollment because American soldiers were returning from overseas. During the period from the 1930s to the 1970s, colleges witnessed an increase in the male-to-female ratio of undergraduate students. However, this trajectory altered in the 1980s, with greater rates of female enrollment, and by 2003, there were 1.30 females for every male undergraduate. This pattern of increasing female enrollment can also be seen among graduate school enrollments, as female, as the academic year of 2016-2017 marked the eighth consecutive year in which females earned more doctoral degrees than males.
+The ratio of male-to-female enrolled students in U.S. colleges changed throughout the 20th century. In the 1930s, male and female undergraduate enrollment was approximately equal in  colleges in the United States. After the 1930s, particularly following the end of World War II in 1945, male enrollment began to increase at a faster rate than female enrollment due to American soldiers returning from overseas. This increased male-to-female ratio of undergraduate students continued till the 1970s. However, the trajectory altered in the 1980s, with greater rates of female enrollment, and by 2003, there were 1.30 females for every male undergraduate. This pattern of increasing female student enrollment can also be seen among graduate school enrollments. The academic year of 2016-2017 marked the eighth consecutive year in which females earned more doctoral degrees than males.
 
-Although college enrollments are greater for American females than for males, college-educated women are still not paid equally compared to college-educated men with similar skills and backgrounds. In addition, further categorizations using racial groups better depict wage gaps among college-educated males and females. A study conducted in 1998 discovered that there is a ten to fifteen percent wage difference between white women, black men, black women, Asian men, and Asian women in comparison to white men who have the same characteristics and qualities of college education. Furthermore, this inequality in wages occurs among males and females with graduate degrees. A 2015 study determined that female science and engineering doctoral recipients report having lower salaries than their male colleagues. 
+Although college-enrolled females outnumber college-enrolled males in America, college-educated women are still not paid equally compared to college-educated men with similar skills and backgrounds. In addition, further categorizations using racial groups better depict wage gaps among college-educated males and females. A study conducted in 1998 discovered that there is a ten to fifteen percent wage difference between white women, black men, black women, Asian men, and Asian women in comparison to white men who have the same characteristics and qualities of college education. Furthermore, this inequality in wages occurs among males and females with graduate degrees. A 2015 study determined that female science and engineering doctoral recipients report having lower salaries than their male colleagues. 
 
-Many studies have been conducted to analyze undergraduate enrollment and wage gaps for college-educated people based on gender. However, studies that specifically examine male and female graduate students in these areas are more elusive. Thus, this study seeks to add to the existing literature regarding graduate students by investigating male and female graduate school enrollment from 1967 to 2015. Furthermore, this paper aims to identify shifts in female PhD recipients by field at three different periods in history. Lastly, this study will analyze patterns between salary and gender by examining median salaries for male and female doctoral recipients in 2015 and academic salaries for professors in American colleges. 
+Many studies have been conducted to analyze undergraduate enrollment and wage gaps for college-educated people based on sex. However, studies that specifically examine male and female graduate students in these areas are more elusive. Thus, this study seeks to add to the existing literature regarding graduate students by investigating male and female graduate school enrollment from 1967 to 2015. Furthermore, this paper aims to identify shifts in female PhD recipients by field at three different periods in history. Lastly, this study will analyze patterns between salary and sex by examining median salaries for male and female doctoral recipients in 2015 and academic salaries for professors in American colleges. By conducting this research, this study seeks to add value to policy makers, social activists, and academic professionals in addressing sex and professional pay disparities and inequities. 
+
+
 
 ###Data and Methods
 
-The graduate enrollment data used in this study was provided by the US Department of Education’s National Center for Education Statistics Higher Education General Information Survey. Information on doctoral recipients and their median salaries were obtained from the National Science Foundation’s National Center for Science and Engineering Statistics Survey of Earned Doctorates. In addition, Fox J. and Weisberg, S. (2011) An R Companion to Applied Regression, Second Edition Sage provided data on professor characteristics and associated salaries, gathered from surveys.
+The graduate enrollment data used in this study was provided by the U.S. Department of Education’s National Center for Education Statistics Higher Education General Information Survey. Information on doctoral recipients and their median salaries were obtained from the National Science Foundation’s National Center for Science and Engineering Statistics Survey of Earned Doctorates. In addition, Fox J. and Weisberg, S. (2011) An R Companion to Applied Regression, Second Edition Sage provided data on professor characteristics and associated salaries, gathered from surveys.
 
-The data used in this study was analyzed in R. Two separate linear regressions were created to examine changes in female and male graduate enrollment between 1967 and 2015. To analyze changes in female PhD recipients by field in 1985, 2000, and 2015, a chi-square test was conducted. A paired Wilcoxon sign-rank test was used to compare the median salaries of male and female doctorate recipients within the same field who are currently employed as postdoctoral researchers. In addition, another paired Wilcoxon sign-rank test compared the median salaries of male and female doctorate recipients within the same field, but examined only those employed outside of postdoctoral research. Lastly, a multivariate linear regression model was created to analyze university faculty salaries in the U.S. based on gender, faculty rank, field,  the number of years since obtaining a PhD, and the number of years as a faculty member. 
+The data used in this study was analyzed in R. Two separate linear regressions were created to examine changes in female and male graduate enrollment between 1967 and 2015, with a Pearson’s r test of correlation. To analyze changes in female PhD recipients by field in 1985, 2000, and 2015, a chi-square test was conducted. A non-parametric, paired Wilcoxon Signed-Rank test was used to compare the median salaries of male and female doctorate recipients within the same field who are currently employed as postdoctoral researchers. In addition, another Wilcoxon Signed-Rank test compared the median salaries of male and female doctorate recipients within the same field, but examined only those employed outside of postdoctoral research. Lastly, a multiple linear regression model was created to analyze university faculty salaries in the U.S. based on sex, faculty rank, field, and  the number of years since obtaining a PhD.
+
 
 ###Results and Discussion
 
 ####A Comparison of Male and Female Graduate Enrollment From 1967 to 2015
 
-The total number of both male and female graduate students enrolled in U.S. institutions of higher education grew rapidly between 1967 and 2015, according to data from the US Department of Education. However, the rate at which female graduate student enrollment increased compared to their male counterparts was far greater during this period. In 1967 there were approximately 38 thousand more male graduate students enrolled in U.S. colleges than female enrolled graduate students, but by 1988 female graduate students outnumbered their male counterparts. In 2015, the last year of recorded data, graduate enrolled females outnumbered males by nearly 50 thousand in U.S. colleges and universities.
+The total number of both male and female graduate students enrolled in U.S. institutions of higher education grew rapidly between 1967 and 2015, according to data from the U.S. Department of Education. However, the rate at which female graduate student enrollment increased compared to their male counterparts was far greater during this period (Fig. 1). In 1967, there were approximately 38,000 more male graduate students enrolled in U.S. colleges than female graduate students, but by 1988, female graduate students outnumbered their male counterparts. In 2015, the last year of recorded data, enrolled graduate females outnumbered males by nearly 50,000 in American colleges and universities.
 
 ```{r, include=FALSE}
 # Run a single regression model on graduate male graduate students from 1967-2015
@@ -102,11 +105,12 @@ enroll_graph
 
 **Figure 1. Relationship between total female graduate enrolled students and year (1967-2015) and total male graduate enrolled students and year (1967-2015).** Year significantly predicts total female graduate enrollment (t(47) = 51.659, *p* < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99). Year also significantly predicts total male graduate enrollment (t(47) = 16.612, p < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92).
 
-To determine whether there was an association between year and and number of enrolled male graduate students, a single variable linear regression model was run with ‘year’ being the independent variable and ‘total enrolled male graduate students’ being the dependent variable. The year significantly predicts total male graduate enrollment (t(47) = 16.612, *p* < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92). (Figure 1). To determine whether there was an association between year and and number of enrolled female graduate students, another single variable linear regression model was run with ‘year’ being the independent variable and ‘total enrolled female graduate students’ being the dependent variable. In this case, year also significantly predicts total female graduate enrollment (t(47) = 51.659, *p* < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99). (Figure 1). 
+To determine whether there was an association between year and and number of enrolled male graduate students, a single variable linear regression model was run with ‘year’ being the independent variable and ‘total enrolled male graduate students’ being the dependent variable. The year significantly predicts total male graduate enrollment (t(47) = 16.612, p < 0.001) with a strong positive correlation between the two variables (Pearson's r = 0.92), (Fig. 1). To determine whether there was an association between year and and number of enrolled female graduate students, another single variable linear regression model was run with ‘year’ being the independent variable and ‘total enrolled female graduate students’ being the dependent variable. In this case, year also significantly predicts total female graduate enrollment (t(47) = 51.659, p < 0.001) with a strong positive correlation between the two variables (Pearson’s r = 0.99), (Fig. 1). 
 
-While there is an association between both the number of male and female graduate enrolled students and the year, it is important to note some key differences between the two. The proportion of female graduate students enrolled part time is far higher in comparison to the proportion of female graduate students enrolled full time. Part time female graduate students surpassed part time male graduate students in the mid 1970s, whereas full time female graduate students surpassed the number of full time male graduate students in the late 1990s.
+While there is an association between both the number of enrolled male and female graduate students and the year, it is important to note some key differences between the two groups. The proportion of female graduate students enrolled part-time is far higher in comparison to the proportion of female graduate students enrolled full-time. Part-time female graduate students surpassed part-time male graduate students in the mid-1970s, whereas full-time female graduate students surpassed the number of full-time male graduate students in the late-1990s.
 
-The slower growth of full time female graduate students in comparison to part time female enrolled graduate students can potentially be explained due to differences in gender roles in the 1970s and 1980s. During this time it was still common place for women to be the primary caregiver for their family, while men were the primary source of income. Beginning in the 1990s, the number of full time female graduate students increased rapidly, perhaps as a result of the changing societal views on gender roles. 
+The slower growth of full-time female graduate students in comparison to part-time female enrolled graduate students can potentially be explained due to differences in gender roles in the 1970s and 1980s. During this time it was still common place for women to be the primary caregiver for their family, while men were the primary source of income (insert citation). Beginning in the 1990s, the number of full time female graduate students increased rapidly, perhaps as a result of the changing societal views on gender roles. 
+
 
 ```{r, include=FALSE}
 # create a df of female phds in the 4 fields in 1985, 2000, 2015
@@ -135,7 +139,8 @@ female_phd_year_x2
 ```
 ####Changes in Female PhD recipients in Four Fields in 1985, 2000, and 2015
 
-The number of female PhD recipients in physical and earth sciences, engineering, education, and humanities and the arts increased from 1985 to 2015. The amount of increase in female PhD recipients was substantial in physical and earth sciences, engineering, and humanities and the arts, however the increase in education was rather nominal.
+The number of female PhD recipients in physical and earth sciences, engineering, education, and humanities and the arts increased from 1985 to 2015. The amount of increase in female PhD recipients was substantial in physical and earth sciences, engineering, and humanities and the arts, while the increase in education was rather nominal.
+
 ```{r, echo=FALSE}
 # graphically represent increase in female phds by field in 1985, 2000, and 2015
 
@@ -148,18 +153,18 @@ phds_femalecounts_year_tbl <- phds_tbl3 %>%
 
 phds_femalecounts_year_tbl
 ```
-In order to determine if a significant association exists between female PhD recipients by field and year, we complied the raw counts of female PhD recipients by field and the year in which they were recorded (1985, 2000, 2015). (See Table 2). After the raw counts were compiled we converted the raw counts into proportions in order to run a Pearson’s chi-square test for association between year and the number of female PhD recipients by field. After running the test an association between year and female PhD recipients by field was found, $\chi^2$(6) = 2073.3, *p* < 0.001.
+In order to determine if a significant association exists between female PhD recipients by field and year, we complied the raw counts of female PhD recipients by field and the year in which they were recorded (1985, 2000, 2015), (Table 2). After the raw counts were compiled, we converted the raw counts into proportions to run a Pearson’s chi-square test for association between year and the number of female PhD recipients by field. After running the test, an association between year and female PhD recipients by field was found, ($\chi^2$ = 2073.3 $\chi^2$(df) = 6, *p* < 0.001).
 
-The most interesting aspect in this data is the amount of increase in female PhD recipients in STEM fields (physical/earth sciences, engineering). The amount of female PhD recipients in physical and earth sciences increased nearly 350 % between 1985 and 2015, whereas the amount of female PhD recipients in engineering increased by over 1000%. The amount of female PhD recipients in humanities and arts doubled, however the amount of female PhD recipients in education barely increased from 1985 to 2015 by just 11 more recipients. In fact, the amount of female PhD recipients in education decreased from its peak in 2000 of 4,179 to 3,502 in 2015. (Table 2).
+The most interesting aspect in this data is the amount of increase in female PhD recipients in STEM fields (physical/earth sciences, engineering). The amount of female PhD recipients in physical and earth sciences increased nearly 350% between 1985 and 2015, whereas the amount of female PhD recipients in engineering increased by over 1000%. While the amount of female PhD recipients in humanities and arts doubled, the amount of female PhD recipients in education barely increased from 1985 to 2015 by just 11 more recipients. In fact, the amount of female PhD recipients in education decreased from its peak in 2000 of 4,179 to 3,502 in 2015 (Table 2).
 
-The large increases in female PhD recipients in STEM fields can also potentially be explained in shifting societal notions of what is considered “so-called” male or female professions. In the 1980s it was still a popular notion in American society that “female professions” did not usually include professions such as a scientist or an engineer. However, as these notions have shifted significantly over the past several decades the number of female PhD recipients in STEM have increased dramatically. 
-
-
+The large increases in female PhD recipients in STEM fields can also potentially be explained in shifting societal notions of what is considered “so-called” male or female professions. In the 1980s, it was still a popular notion in American society that “female professions” did not usually include professions such as a scientist or an engineer. However, as these notions have shifted significantly over the past several decades the number of female PhD recipients in STEM have increased dramatically.
 
 
-###3. Compare median salaries for male and female doctorate recipients in 2015. Answer these two questions:Does median salary differ significantly between male and female starting postdoc positions? Does median salary differ significantly between male and female PhD recipients in non-postdoc employment positions?
 
-```{r}
+
+#### A Comparison of Male and Female PhD Recipients’ Salaries for Postdoctoral and Other Employment Positions in 2015
+
+```{r, include = FALSE}
 
 # Create histograms to see if median salary data for employed and postdoc positions are normal
 
@@ -187,7 +192,7 @@ postdocfemale_hist
 
 ```
 
-```{r}
+```{r, include = FALSE}
 
 # Run a Wilcoxon signed-rank test (paired) for males and females within their specific fields who are employed
 
@@ -208,7 +213,7 @@ wsr_employ
 ```
 
 
-```{r}
+```{r, include = FALSE}
 
 # Calculate Cliff's Delta for Wilcoxon sign-rank test for  males and females within their specific fields who are employed
 
@@ -219,9 +224,10 @@ employ_cliffs
 # Small to medium effect size (Cliff's Delta = 0.21), meaning there is some overlap between groups
 
 ```
-Employed in-line referencing: V = `r wsr_employ$statistic`, *p*  < 0.01, $\alpha$ = 0.05. Cliff's Delta = `r round(employ_cliffs$estimate,2)`.
 
-```{r}
+
+
+```{r, include = FALSE}
 
 # Run a Wilcoxon signed-rank test (paired) for males and females within their specific fields who are postdocs
 
@@ -239,7 +245,8 @@ wsr_postdoc
 
 ```
 
-```{r}
+
+```{r, include = FALSE}
 
 # Calculate Cliff's Delta for Wilcoxon signed-rank test (paired) for males and females within their specific fields who are postdocs
 
@@ -250,10 +257,16 @@ postdoc_cliffs
 # Negligible effect size
 
 ```
+Median salaries for male and female doctorate recipients in 2015 were examined to determine if the salaries are significantly different based on sex. A paired non-parametric Wilcoxon Signed-Rank test was used to compare median salaries for males and females within the same field, currently in postdoctoral positions. A separate paired Wilcoxon Sign-Rank test examined median salary difference for male and female doctorate recipients within the same field and employed in positions outside of postdoctoral research. In addition, Cliff’s delta tests were carried out to quantify the effect size of these groups.
 
-###4. Explore relationships between variables in the ‘Faculty salary data (2008 - 2009 survey)’ dataset. Develop a model describing faculty salary based on data for faculty sex, rank, years in current position, field, and number of years since doctoral degree was earned. You should make decisions regarding which variables should remain in your final model. Describe the results qualitatively and quantitatively (i.e., don’t just report the statistical results of the model – make sure you describe interesting findings in text). You can also discuss any concerns that you have with the model(s) you present, if any.
+For male and female doctorate recipients who are currently working as postdoctoral researchers, median salary did not differ significantly (V = `r wsr_postdoc$statistic`, *p* = `r round(wsr_postdoc$p.value,1)`, $\alpha$ = 0.05, Cliff’s delta = negligible). In the fifteen fields examined, only three fields exhibited median male salaries that were greater than salaries of females: mathematics and computer sciences, education, and other fields not related to science and engineering. Postdoctoral pay in education depicted the greatest disparity in salary in preference of males, with males making $5,000 more than female postdoctoral researchers. 
 
-```{r}
+In contrast to salaries of postdoctoral researchers, a significant difference in median salary was determined for male and female doctorate recipients currently employed in positions not related to postdoctoral research (V = `r wsr_employ$statistic`, *p*  < 0.01, $\alpha$ = 0.05). In addition, the effect size is small to moderate (Cliff's Delta = `r round(employ_cliffs$estimate,2)`). Twelve out of the fifteen fields analyzed exhibited higher median salaries for males than females. The largest difference in median salaries, in which males were making more than females, was in the mathematics and computer sciences field, with a salary difference of $15,000. This finding should be examined further in future research to analyze why salaries differ for male and female doctorate recipients employed outside of postdoctoral research even though these recipients are within the same field. 
+
+
+#### An Analysis of Faculty Salaries in United States Higher Education
+
+```{r, include = FALSE}
 
 # First, look at the data graphically to determine if a linear relationship exists between faculty salary
 
@@ -268,7 +281,7 @@ salary_scatter
 ```
 
 
-```{r}
+```{r, include = FALSE}
 
 # Create a mutivariate linear regression model for faculty salary
 
@@ -278,17 +291,10 @@ summary(faculty_salary_lm)
 
 # Reference levels are females, associate professors, and discipline A. 
 
-# salary = 78862.8 + 4783.5(sexmale) - 12907.6(rankAsstProf) + 32158.4(rankProf) + 535.1(years_since_phds) + 14417.6(disciplineB)
-
-# If all other variables are the same, then male graduates with PhDs make $4,783.5 more than female graduates with PhDs.
-
-# If all other variables are the same, then professors make $32,158.4 more than associate professors. 
-
-# Adjusted R2 value is 0.45. 45% of the variance in faculty salaries can be predicted by the independent variable.
 
 ```
 
-```{r}
+```{r, include = FALSE}
 
 # Check out model diagnostics
 
@@ -299,7 +305,7 @@ plot(faculty_salary_lm)
 # Residuals vs. fitted shows scatter, but slight concentration around 0
 
 ```
-### Note for Jess: Edit regression table caption 
+
 
 ```{r, results = 'asis'}
 
@@ -314,8 +320,50 @@ stargazer(faculty_salary_lm,
           single.row = TRUE
           )
 
-# “Setosa sepal length significantly predicts sepal width (b = 0.79, t(48) = 7.6, p < 0.001) with a strong positive correlation between the two (Pearson’s r = 0.74). The overall model (width = 0.79(length) − 0.57; both in centimeters) explains a significant amount of variance in sepal width (F(1,48) = 59, p < 0.001, R2 = 0.55).”
 
 ```
+
+
+Many characteristics of faculty members at American universities have the potential to affect their salaries. To examine the influence of faculty characteristics on salary, a multiple linear regression model was created. The characteristics of faculty members included in the model are sex, faculty position, field, and years since obtaining a doctorate degree. The model [salary = 80,988.47 + 4,349.37(Male) - 13,104.15(Assistant Professor) + 32,928.40(Professor) + 61.01(Years Since PhD) + 13,937.47(Applied Field); in
+US $] significantly predicts faculty salary (F(391) = 63.27, p < 0.001, R2 = 0.44).
+
+According to this model, if all other variables are the same, then male professors make $4,349.37 more than female professors. In addition, this model indicates that faculty members with ranking as professors make $32,928.40 more than associate professors, if every other variable remains the same. Thus, professor rank seems to have more influence on faculty salary than the faculty member's sex. Furthermore, it is observed that faculty members in applied fields earn $13,937.47 than faculty members in theoretical fields, if all other variables remain the same. In addition, it is interesting, but not surprising, to note that the model indicates that assistant professors make less money than associate professors, as assistant professor positions are lower than associate ones.
+
+It is important to note that 44% of the variance in faculty salaries can be predicted by the model’s variables. The model created is a good fit in determining the influence of sex, faculty position, field, and years since obtaining a PhD on faculty salaries because these variables show a linear relationship with faculty salary. Future research can focus on further examining the relationships between these factors and faculty salaries. Additionally, future studies can apply this model to faculty members of universities in other countries.    
+
+
+
+### Conclusion 
+
+The amount of enrolled female graduate students and PhD recipients has increased drastically in the past several decades to the point that there are currently more enrolled female graduate students and female PhD recipients by year compared to males. However, these increases in female graduate enrollment and PhD recipients has not necessarily translated into pay equity across professions in comparison to their male counterparts. This report aims to characterize key differences in gender regarding graduate enrollment, PhD recipients, postdoc and non-postdoc employment pay as well as the relationships between faculty salaries and several faculty characteristics. The following statements summarize the key findings of the report:
+
+There is an association between year and total enrolled male and female graduate students between 1967 and 2015.
+Part-time enrolled female graduate students grew faster than full-time enrolled female graduate students. 
+There is a significant association between female PhD recipients and year (1985, 2000, 2015). Female PhD recipients grew substantially from 1985 to 2015 in the STEM fields of physical/earth science and engineering. Female PhD recipients grew marginally from 1985 to 2015 in humanities and arts. Female PhD recipients in education stayed relatively stagnant from 1985 to 2015 
+Median salary between male and female postdoctoral researchers did not differ significantly.
+Median salary between male and female doctorate recipients working outside of postdoctoral research differed significantly, with the largest difference (in preference of males) in the mathematics and computer sciences field.
+Faculty salary is significantly predicted by sex, faculty position, field, and years since obtaining a PhD. Based on the model obtained,changes in faculty position/rank result in the largest changes in salary.
+
+
+Data on female and male enrolled graduate students, PhD recipients, salary, rank, and discipline are essential to understanding the disparities and inequities that exist in academia. The graduate enrollment data provided by the U.S. Department of Education’s National Center for Education Statistics Higher Education General Information Survey should continue going forward so that solutions can be devised to address inequities between genders in academia. Information on doctoral recipients and their median salaries provided by the National Science Foundation’s National Center for Science and Engineering Statistics Survey of Earned Doctorates will be helpful in the larger gender pay disparity discussion in academia, as well as the entire economy. Survey data gathered by Fox J. and Weisberg, S. (2011) An R Companion to Applied Regression, Second Edition Sage on professor characteristics and associated salaries will be useful in illuminating disparities among salaries based on faculty characteristics. A more thorough assessment of the data that goes beyond a survey in the future will lead to more accurate data regarding these two variables. Continued and improved data collection by American institutions in the coming years on graduate student enrollment, PhD recipients, and faculty salaries will provide policy makers, activists, and career professionals with the tools necessary to decrease pay inequities and improve the equity of sexes and professional representation in the future. 
+
+### References
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
 
