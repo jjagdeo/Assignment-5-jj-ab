@@ -151,7 +151,7 @@ phds_tbl3 <- phds_tbl2 %>%
   select(field_of_study, "1985", "2000", "2015")
 
 phds_femalecounts_year_tbl <- phds_tbl3 %>% 
-  kable(col.names = c("Field of Study","1985", "2000", "2015"),caption = "Table 2. Number of Women PhDs in Four Fields in 1985, 2000, and 2015") %>%
+  kable(col.names = c("Field of Study","1985", "2000", "2015"),caption = "**Table 2. Number of Female PhDs in Four Fields in 1985, 2000, and 2015.** Female PhD recipients increased significantly in physical and earth sciences and engineering between 1985 and 2015. However, the increases in female PhD recipients in humanities and the arts increased marginally. Meanwhile, female PhD recipients in education have declined since 2000.") %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
 
 phds_femalecounts_year_tbl
